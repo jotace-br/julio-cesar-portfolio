@@ -14,17 +14,20 @@
       <a href="#" class="logo">
         <span class="logo-text">Júlio César</span>
       </a>
+      <button class="burger-menu" aria-label="Toggle navigation">
+        &#9776;
+      </button>
       <nav class="nav">
         <a href="#" class="nav-link">Início</a>
         <a href="#sobre" class="nav-link">Sobre</a>
         <a href="#portfolio" class="nav-link">Portfolio</a>
         <a href="#formacao" class="nav-link">Formação</a>
         <a href="#contato" class="nav-link">Contato</a>
+        <a href="https://drive.google.com/file/d/1dPFWoa2RrsJ7sgK56m2DcFO7Qg3VmrQG/view?usp=drive_link" target="_blank"
+          class="btn-link">
+          Baixar Currículo
+        </a>
       </nav>
-      <a href="https://drive.google.com/file/d/1dPFWoa2RrsJ7sgK56m2DcFO7Qg3VmrQG/view?usp=drive_link" target="_blank"
-        class="btn-link">
-        Baixar Currículo
-      </a>
     </div>
   </header>
 
@@ -471,6 +474,65 @@
       </span>
     </div>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const burgerMenu = document.querySelector('.burger-menu');
+      const nav = document.querySelector('.nav');
+      const header = document.querySelector('header');
+      let isOpen = false;
+
+      const toggleNav = () => {
+        if (isOpen) {
+          nav.style.maxHeight = '0';
+        } else {
+          setTimeout(() => {
+            nav.style.maxHeight = `calc(${nav.scrollHeight + 'px'} + 250px)`;
+            console.log('Opening nav, height set to:', nav.scrollHeight + 'px');
+          }, 10);
+        }
+        isOpen = !isOpen;
+      };
+
+      const closeNav = () => {
+        nav.style.maxHeight = '0';
+        isOpen = false;
+      };
+
+      burgerMenu.addEventListener('click', (event) => {
+        event.stopPropagation();
+        toggleNav();
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!header.contains(event.target) && isOpen) {
+          closeNav();
+        }
+      });
+
+      nav.addEventListener('click', (event) => {
+        event.stopPropagation();
+        closeNav();
+      });
+
+      const handleResize = () => {
+        if (window.innerWidth > 767) {
+          nav.style.maxHeight = '';
+          nav.style.overflow = '';
+          nav.style.transition = '';
+        } else {
+          nav.style.maxHeight = isOpen ? nav.scrollHeight + 'px' : '0';
+          nav.style.overflow = 'hidden';
+          nav.style.transition = 'max-height 0.3s ease-in-out';
+        }
+      };
+
+      window.addEventListener('resize', handleResize);
+      handleResize();
+
+      nav.style.transition = 'max-height 0.3s ease-in-out';
+    });
+  </script>
 </body>
 
 </html>
